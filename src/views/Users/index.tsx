@@ -11,7 +11,7 @@ export const Users = () => {
       {
         isLoading
           ? <LoadingText>Loading...</LoadingText>
-          : users.map((user) => <UserCard key={user.id} {...user} />)
+          : users.map((user) => <UserCard key={user.email} {...user} />)
       }
     </Wrapper>
   );

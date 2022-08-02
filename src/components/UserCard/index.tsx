@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { User } from 'views/Users/useUsers';
 import { Info } from 'components/UserCard/Info';
 import { Wrapper, InfoWrapper, InfoSection, Avatar, LocationWrapper } from './UserCard.styled';
 import { Divider } from 'components/Divider';
+import { User } from 'types/User/user';
 
 export const UserCard: FC<User> = ({ name, gender, phone, picture, location, email }) => (
   <Wrapper>
