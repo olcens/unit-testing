@@ -1,9 +1,11 @@
 import { Users } from 'views/Users';
+import { store } from 'store/store';
+import { Provider } from 'react-redux';
 
-function App () {
+export const App = () => {
   return (
-    <Users/>
+    <Provider store={store}>
+      <Users/>
+    </Provider>
   );
-}
-
-export default App;
+};
