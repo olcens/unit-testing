@@ -3,12 +3,7 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react/jsx-runtime',
-    'standard'
-  ],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:react/jsx-runtime', 'standard', 'prettier'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
@@ -17,16 +12,24 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module'
   },
-  plugins: [
-    'react',
-    '@typescript-eslint'
-  ],
+  plugins: ['react', 'prettier', '@typescript-eslint'],
   rules: {
     'react/jsx-uses-react': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-indent': ['error', 2],
     'react/jsx-indent-props': ['error', 2],
-    semi: ['error', 'always'],
+    'prettier/prettier': [
+      2,
+      {
+        semi: true,
+        trailingComma: 'none',
+        singleQuote: true,
+        printWidth: 120,
+        tabWidth: 2,
+        endOfLine: 'auto'
+      }
+    ],
+    semi: ['error', 'always']
   },
   settings: {
     react: {
