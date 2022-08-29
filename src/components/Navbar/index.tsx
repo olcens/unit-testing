@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { ChangeEvent, FC, useState } from 'react';
 import {
   AppBar,
   Container,
@@ -14,10 +14,11 @@ import {
 } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { pages, userOptions } from './constatns';
-import { useUsers } from '../../views/Users/useUsers';
+import { useUsers } from 'views/Users/useUsers';
+import { SearchInput } from '../SearchInput';
 
 export const NavBar: FC = () => {
-  const { getFilteredUsers } = useUsers();
+  const { getFilteredUsers, setUsersFilterText, filterText } = useUsers();
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -27,6 +28,10 @@ export const NavBar: FC = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setUsersFilterText(e.target.value);
   };
 
   return (
@@ -79,6 +84,12 @@ export const NavBar: FC = () => {
               </Button>
             ))}
           </Box>
+
+          <SearchInput
+            filterText={filterText}
+            handleChange={handleSearchChange}
+            handleClear={() => setUsersFilterText('')}
+          />
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">

@@ -3,16 +3,18 @@ import { UserCard } from 'components/UserCard';
 import { Title, Wrapper, LoadingText } from './Users.styled';
 
 export const Users = () => {
-  const { users, isLoading } = useUsers();
+  const { users, isLoading, filterText } = useUsers();
 
   return (
     <Wrapper>
       <Title>Users list</Title>
-      {
-        isLoading
-          ? <LoadingText>Loading...</LoadingText>
-          : users.map((user) => <UserCard key={user.email} {...user} />)
-      }
+      {isLoading ? (
+        <LoadingText>Loading...</LoadingText>
+      ) : (
+        users
+          .filter((u) => u.name.first.includes(filterText) || u.name.last.includes(filterText))
+          .map((user) => <UserCard key={user.email} {...user} />)
+      )}
     </Wrapper>
   );
 };
