@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   transition: 0.2s ease;
-  
+
   &:hover {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.24);
     transform: scale(1.03);

@@ -1,23 +1,33 @@
 import { SliceState } from 'store/SliceState.enum';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchUsers } from 'store/users/fetchUsers';
 import { User } from 'types/User/user';
 
 export interface UsersSliceState {
   fetchedUsers: User[];
   sliceState: SliceState;
+  filterText: string;
+  selectedUser?: User;
 }
 
 const initialState: UsersSliceState = {
   fetchedUsers: [],
-  sliceState: SliceState.IDLE
+  sliceState: SliceState.IDLE,
+  filterText: ''
 };
 
 const usersSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {},
-  extraReducers: builder => {
+  reducers: {
+    setFilterText: (state, action: PayloadAction<string>) => {
+      state.filterText = action.payload;
+    },
+    setSelectedUser: (state, action: PayloadAction<User>) => {
+      state.selectedUser = action.payload;
+    }
+  },
+  extraReducers: (builder) => {
     builder
       .addCase(fetchUsers.pending, (state) => {
         state.sliceState = SliceState.PENDING;
@@ -31,5 +41,7 @@ const usersSlice = createSlice({
       });
   }
 });
+
+export const { setFilterText, setSelectedUser } = usersSlice.actions;
 
 export default usersSlice.reducer;
