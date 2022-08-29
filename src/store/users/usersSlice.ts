@@ -7,6 +7,7 @@ export interface UsersSliceState {
   fetchedUsers: User[];
   sliceState: SliceState;
   filterText: string;
+  selectedUser?: User;
 }
 
 const initialState: UsersSliceState = {
@@ -21,6 +22,9 @@ const usersSlice = createSlice({
   reducers: {
     setFilterText: (state, action: PayloadAction<string>) => {
       state.filterText = action.payload;
+    },
+    setSelectedUser: (state, action: PayloadAction<User>) => {
+      state.selectedUser = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -38,6 +42,6 @@ const usersSlice = createSlice({
   }
 });
 
-export const { setFilterText } = usersSlice.actions;
+export const { setFilterText, setSelectedUser } = usersSlice.actions;
 
 export default usersSlice.reducer;

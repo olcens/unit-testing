@@ -1,15 +1,15 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers } from 'store/users/fetchUsers';
 import { usersSelectors } from 'store/users/selectors';
 import { AppDispatch } from 'store/store';
-import { getUsersParams } from 'types/User/user';
-import { setFilterText } from 'store/users/usersSlice';
-import { useUpdateEffect } from '../../hooks/useUpdateEffect';
+import { getUsersParams, User } from 'types/User/user';
+import { setFilterText, setSelectedUser } from 'store/users/usersSlice';
 
 export const useUsers = () => {
   const dispatch = useDispatch<AppDispatch>(); // TODO -- put dispatch type inside redux config
   const users = useSelector(usersSelectors.getFetchedUsers);
+  const selectedUser = useSelector(usersSelectors.getSelectedUser);
   const isLoading = useSelector(usersSelectors.getAreUsersFetching);
   const filterText = useSelector(usersSelectors.getFilterText);
 
@@ -27,7 +27,14 @@ export const useUsers = () => {
     [dispatch]
   );
 
-  useUpdateEffect(() => {
+  const selectUser = useCallback(
+    (user: User) => {
+      dispatch(setSelectedUser(user));
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
     dispatch(fetchUsers({ results: 30 }));
   }, []);
 
@@ -35,7 +42,9 @@ export const useUsers = () => {
     users,
     isLoading,
     filterText,
+    selectedUser,
     getFilteredUsers,
-    setUsersFilterText
+    setUsersFilterText,
+    selectUser
   };
 };

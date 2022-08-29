@@ -16,9 +16,12 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { pages, userOptions } from './constatns';
 import { useUsers } from 'views/Users/useUsers';
 import { SearchInput } from '../SearchInput';
+import { Avatar } from './Navbar.styled';
+import { getUserId } from 'utils/getUserId';
+import { User } from 'types/User/user';
 
 export const NavBar: FC = () => {
-  const { getFilteredUsers, setUsersFilterText, filterText } = useUsers();
+  const { getFilteredUsers, setUsersFilterText, filterText, selectedUser } = useUsers();
 
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
@@ -27,6 +30,17 @@ export const NavBar: FC = () => {
   };
 
   const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const handleShowUser = (user: User) => {
+    setTimeout(() => {
+      const element = document.getElementById(`USER-ID-${getUserId(user)}`);
+
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
     setAnchorElUser(null);
   };
 
@@ -94,9 +108,13 @@ export const NavBar: FC = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <SvgIcon sx={{ color: 'white', fontSize: 40 }}>
-                  <AccountCircle />
-                </SvgIcon>
+                {selectedUser ? (
+                  <Avatar src={selectedUser.picture.medium} />
+                ) : (
+                  <SvgIcon sx={{ color: 'white', fontSize: 40 }}>
+                    <AccountCircle />
+                  </SvgIcon>
+                )}
               </IconButton>
             </Tooltip>
             <Menu
@@ -115,11 +133,18 @@ export const NavBar: FC = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {userOptions.map((option) => (
-                <MenuItem key={option} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{option}</Typography>
-                </MenuItem>
-              ))}
+              <Box>
+                {userOptions.map((option) => (
+                  <MenuItem key={option} onClick={handleCloseUserMenu}>
+                    <Typography textAlign="center">{option}</Typography>
+                  </MenuItem>
+                ))}
+                {selectedUser && (
+                  <MenuItem key={selectedUser.email} onClick={() => handleShowUser(selectedUser)}>
+                    <Typography textAlign="center">Show user</Typography>
+                  </MenuItem>
+                )}
+              </Box>
             </Menu>
           </Box>
         </Toolbar>
