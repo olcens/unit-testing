@@ -35,5 +35,6 @@ module.exports = {
     react: {
       version: 'detect'
     }
-  }
+  },
+  ignorePatterns: ['src/__test__/**']
 };
