@@ -1,9 +1,9 @@
-import { render } from '@testing-library/react';
-import { Divider } from 'components/Divider';
+import { Users } from 'views/Users';
+import { renderWithProviders } from '__test__/renderWithProviders';
 
 describe('Users view', () => {
   it('displays lists of users', () => {
-    const component = render(<Divider />);
-    expect(component).toBeTruthy();
+    const { getByText } = renderWithProviders(<Users />);
+    expect(getByText(/Users list/i).textContent).toBe('Users list');
   });
 });
