@@ -8,7 +8,7 @@ import { UserApiResponse } from 'types/User/user';
 // 1. Did list render ✅
 // 2. Did list render with a proper user count ✅
 // 3. Did (UserCard) onClick trigger a (useUsers) function
-// 4. Did list crash if API returns an error
+// 4. Did list crash if API returns an error ✅
 
 vi.mock('axios');
 const mockedAxios = axios as Mocked<typeof axios>;
@@ -25,10 +25,10 @@ describe('Users view', () => {
     };
     mockedAxios.get.mockResolvedValue(mockedResponse);
 
-    const { getByText, findAllByText } = renderWithProviders(<Users />);
+    const { getByText, findAllByTestId } = renderWithProviders(<Users />);
     expect(getByText(/Loading.../i).textContent).toBe('Loading...');
 
-    const nameNodes = await findAllByText(/Name/i);
+    const nameNodes = await findAllByTestId('user-card');
     expect(nameNodes).toBeTruthy();
     expect(nameNodes.length).toBe(USERS_COUNT);
   });
@@ -36,5 +36,19 @@ describe('Users view', () => {
   it('click on user card should trigger a function', async () => {
     const { getByText, findAllByText } = renderWithProviders(<Users />);
   });
-  it('should not crash when API returns an error', async () => {});
+
+  it('should not crash when API returns an error', async () => {
+    mockedAxios.get.mockRejectedValue({});
+    const { getByText, findAllByTestId } = renderWithProviders(<Users />);
+
+    expect(getByText(/Loading.../i).textContent).toBe('Loading...');
+    try {
+      const nameNodes = await findAllByTestId('user-card');
+
+      // Should not happen
+      expect(true).toEqual(false);
+    } catch (e) {
+      expect(e).toBeTruthy();
+    }
+  });
 });
