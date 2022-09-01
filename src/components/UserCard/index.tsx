@@ -13,7 +13,7 @@ interface UserCardProps {
 export const UserCard: FC<UserCardProps> = ({ user, selectUserHandler }) => {
   const { name, gender, phone, picture, location, email } = user;
   return (
-    <Wrapper id={`USER-ID-${getUserId(user)}`} onClick={() => selectUserHandler(user)}>
+    <Wrapper id={`USER-ID-${getUserId(user)}`} onClick={() => selectUserHandler(user)} data-testid={'user-card'}>
       <InfoWrapper>
         <Avatar src={picture.medium} />
         <InfoSection>
