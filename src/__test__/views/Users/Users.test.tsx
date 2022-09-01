@@ -2,8 +2,11 @@ import { Users } from 'views/Users';
 import { renderWithProviders } from '__test__/renderWithProviders';
 
 describe('Users view', () => {
-  it('displays lists of users', () => {
-    const { getByText } = renderWithProviders(<Users />);
-    expect(getByText(/Users list/i).textContent).toBe('Users list');
+  it('should display a list of users', async () => {
+    const { getByText, findAllByText } = renderWithProviders(<Users />);
+    expect(getByText(/Loading.../i).textContent).toBe('Loading...');
+
+    const nameNode = await findAllByText(/Name/i);
+    expect(nameNode).toBeTruthy();
   });
 });
