@@ -43,8 +43,7 @@ describe('Users view', () => {
 
     expect(getByText(/Loading.../i).textContent).toBe('Loading...');
     try {
-      const nameNodes = await findAllByTestId('user-card');
-
+      await findAllByTestId('user-card');
       // Should not happen
       expect(true).toEqual(false);
     } catch (e) {
