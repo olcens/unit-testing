@@ -9,6 +9,7 @@ import { UserApiResponse } from 'types/User/user';
 // 2. Did list render with a proper user count ✅
 // 3. Did (UserCard) onClick trigger a (useUsers) function
 // 4. Did list crash if API returns an error ✅
+// 5. Did loading disappeared after data is fetched
 
 vi.mock('axios');
 const mockedAxios = axios as Mocked<typeof axios>;
