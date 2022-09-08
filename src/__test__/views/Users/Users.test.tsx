@@ -8,7 +8,7 @@ import { act } from '@testing-library/react';
 
 // 1. Did list render ✅
 // 2. Did list render with a proper user count ✅
-// 3. Did (UserCard) onClick trigger a (useUsers) function
+// 3. Did (UserCard) onClick trigger a (useUsers) function ✅
 // 4. Did list crash if API returns an error ✅
 // 5. Did loading disappeared after data is fetched ✅
 
