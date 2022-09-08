@@ -3,7 +3,7 @@ import { UserCard } from 'components/UserCard';
 import { Title, Wrapper, LoadingText } from './Users.styled';
 
 export const Users = () => {
-  const { users, isLoading, filterText, selectUser } = useUsers();
+  const { users, isLoading, selectUser } = useUsers();
 
   return (
     <Wrapper>
@@ -11,9 +11,7 @@ export const Users = () => {
       {isLoading ? (
         <LoadingText>Loading...</LoadingText>
       ) : (
-        users
-          .filter((u) => u.name.first.includes(filterText) || u.name.last.includes(filterText))
-          .map((user) => <UserCard key={user.email} user={user} selectUserHandler={selectUser} />)
+        users.map((user) => <UserCard key={user.email} user={user} selectUserHandler={selectUser} />)
       )}
     </Wrapper>
   );
